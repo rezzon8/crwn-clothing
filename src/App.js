@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import "./App.css";
 
 // Utils
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 // Components
 import Header from "./components/header/header.component";
@@ -33,9 +33,8 @@ class App extends React.Component {
 
   componentDidMount() {
     // A listener on state changes on firebase auth
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
+      createUserProfileDocument(user);
     });
   }
 
